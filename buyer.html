@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buyer Registration — SouthLink Market</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; color: #222; }
+
+    header {
+      background: #1D9E75;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { color: #fff; font-size: 24px; }
+    header p { color: #E1F5EE; font-size: 13px; }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .form-section {
+      max-width: 600px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .form-title { font-size: 26px; color: #0F6E56; margin-bottom: 8px; }
+    .form-sub {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      color: #222;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #1D9E75;
+      background: #fff;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #1D9E75;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #0F6E56; }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+    .success-box {
+      display: none;
+      background: #E1F5EE;
+      border: 1.5px solid #1D9E75;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+      color: #0F6E56;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .error-box {
+      display: none;
+      background: #FCEBEB;
+      border: 1.5px solid #E53E3E;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+      color: #A32D2D;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #0F6E56;
+      color: #9FE1CB;
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <h1>🌱 SouthLink Market</h1>
+      <p>Juba, South Sudan</p>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="farmer.html">Sell Produce</a>
+      <a href="listings.html">Buy Produce</a>
+      <a href="buyer.html">Register as Buyer</a>
+    </nav>
+  </header>
+
+  <!-- FORM -->
+  <section class="form-section">
+    <h2 class="form-title">🛒 Buyer Registration</h2>
+    <p class="form-sub">Register as a buyer and we will connect you directly to fresh produce from local farmers in South Sudan. No middlemen. Reliable supply. Fair prices.</p>
+
+    <div class="form-group">
+      <label>Full Name / Business Name *</label>
+      <input type="text" id="full_name" placeholder="e.g. Mary's Restaurant" required />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="text" id="phone_number" placeholder="e.g. +211 912 345 678" required />
+    </div>
+
+    <div class="form-group">
+      <label>Type of Buyer *</label>
+      <select id="business_type">
+        <option value="">Select your type...</option>
+        <option>Restaurant / Hotel</option>
+        <option>Food Trader / Wholesaler</option>
+        <option>School / Institution</option>
+        <option>NGO / UN Kitchen</option>
+        <option>Individual Household</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Location in Juba *</label>
+      <input type="text" id="location" placeholder="e.g. Gudele, Juba" required />
+    </div>
+
+    <div class="form-group">
+      <label>What Produce Do You Need? *</label>
+      <select id="produce_needed">
+        <option value="">Select produce...</option>
+        <option>Maize</option>
+        <option>Cassava</option>
+        <option>Groundnuts</option>
+        <option>Sorghum</option>
+        <option>Tomatoes</option>
+        <option>Onions</option>
+        <option>Beans</option>
+        <option>Fresh Fish</option>
+        <option>Vegetables</option>
+        <option>Multiple items</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Quantity Needed *</label>
+      <input type="text" id="quantity_needed" placeholder="e.g. 500kg per week, 10 bags per month" required />
+    </div>
+
+    <button class="submit-btn" onclick="submitBuyer()" id="submit-btn">
+      Register as Buyer ✓
+    </button>
+
+    <div class="success-box" id="success-box">
+      ✅ Thank you for registering with SouthLink Market!<br><br>
+      We will contact you on WhatsApp within 24 hours to connect you with the right farmers.<br><br>
+      <strong>Welcome to SouthLink Market! 🌱</strong>
+    </div>
+
+    <div class="error-box" id="error-box">
+      ❌ Something went wrong. Please check your details and try again.
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>SouthLink Market &copy; 2026 &nbsp;|&nbsp; Bangbe Emmanuel &nbsp;|&nbsp; Juba, South Sudan &nbsp;|&nbsp; southlinkmarket@gmail.com</p>
+  </footer>
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://vhlhpkvsvtudjyprjbre.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_f-os_-gLU61SQ9XpwdzTow_UDAly1Lz';
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function submitBuyer() {
+      const full_name      = document.getElementById('full_name').value.trim();
+      const phone_number   = document.getElementById('phone_number').value.trim();
+      const business_type  = document.getElementById('business_type').value;
+      const location       = document.getElementById('location').value.trim();
+      const produce_needed = document.getElementById('produce_needed').value;
+      const quantity_needed = document.getElementById('quantity_needed').value.trim();
+
+      if (!full_name || !phone_number || !business_type || !location || !produce_needed || !quantity_needed) {
+        alert('Please fill in all fields before submitting.');
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      const { error } = await db.from('buyers').insert([{
+        full_name,
+        phone_number,
+        business_type,
+        location,
+        produce_needed,
+        quantity_needed
+      }]);
+
+      if (error) {
+        document.getElementById('error-box').style.display = 'block';
+        document.getElementById('error-box').textContent = '❌ Error: ' + error.message;
+        btn.disabled = false;
+        btn.textContent = 'Register as Buyer ✓';
+      } else {
+        document.getElementById('success-box').style.display = 'block';
+        btn.textContent = 'Submitted! ✓';
+        ['full_name','phone_number','location','quantity_needed'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
+        document.getElementById('business_type').value = '';
+        document.getElementById('produce_needed').value = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
