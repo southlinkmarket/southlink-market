@@ -276,9 +276,10 @@
       grid.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Loading fresh produce...</div>';
 
       const { data, error } = await db
-        .from('farmers')
-        .select('*')
-        .order('created_at', { ascending: false });
+  .from('farmers')
+  .select('*')
+  .eq('listing_status', 'approved')
+  .order('created_at', { ascending: false });
 
       if (error) {
         grid.innerHTML = '<div class="empty-state"><h3>Could not load listings</h3><p>Please refresh the page and try again.</p></div>';
