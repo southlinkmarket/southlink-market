@@ -26,29 +26,37 @@
     nav a:hover { text-decoration: underline; }
 
     .form-section {
-      max-width: 600px;
-      margin: 60px auto;
+      max-width: 620px;
+      margin: 50px auto;
       background: #fff;
       border-radius: 16px;
       padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
     }
-    .form-title { font-size: 26px; color: #0F6E56; margin-bottom: 8px; }
-    .form-sub {
-      font-size: 14px;
-      color: #666;
+
+    .steps-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
       margin-bottom: 32px;
-      line-height: 1.5;
     }
-    .form-group { margin-bottom: 20px; }
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 6px;
+    .step-pill {
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      background: #f0f0f0;
+      color: #999;
     }
-    input, select, textarea {
+    .step-pill.active { background: #1D9E75; color: #fff; }
+    .step-pill.done { background: #E1F5EE; color: #0F6E56; }
+
+    .form-title { font-size: 24px; color: #0F6E56; margin-bottom: 8px; }
+    .form-sub { font-size: 14px; color: #666; margin-bottom: 28px; line-height: 1.6; }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 6px; }
+    input, select {
       width: 100%;
       padding: 12px 16px;
       border: 1.5px solid #ddd;
@@ -59,109 +67,7 @@
       color: #222;
       transition: border 0.2s;
     }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #1D9E75;
-      background: #fff;
-    }
-
-    /* STEPS */
-    .steps-bar {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 32px;
-    }
-    .step-pill {
-      padding: 6px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      background: #f0f0f0;
-      color: #999;
-    }
-    .step-pill.active {
-      background: #1D9E75;
-      color: #fff;
-    }
-    .step-pill.done {
-      background: #E1F5EE;
-      color: #0F6E56;
-    }
-
-    /* PAYMENT BOX */
-    .payment-box {
-      display: none;
-      background: #E1F5EE;
-      border: 1.5px solid #1D9E75;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .payment-box h3 {
-      color: #0F6E56;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-    .payment-box p {
-      font-size: 14px;
-      color: #444;
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-    .price-tag {
-      font-size: 32px;
-      font-weight: bold;
-      color: #0F6E56;
-      margin: 12px 0;
-    }
-    .price-tag span {
-      font-size: 16px;
-      color: #666;
-      font-weight: normal;
-    }
-    .payment-steps {
-      text-align: left;
-      background: #fff;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-    .payment-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 10px;
-      font-size: 13px;
-      color: #333;
-      line-height: 1.5;
-    }
-    .payment-step:last-child { margin-bottom: 0; }
-    .pstep-num {
-      width: 22px;
-      height: 22px;
-      background: #1D9E75;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: bold;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .confirm-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #1D9E75;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-top: 12px;
-      text-align: center;
-      font-family: Arial, sans-serif;
-    }
+    input:focus, select:focus { outline: none; border-color: #1D9E75; background: #fff; }
 
     .submit-btn {
       width: 100%;
@@ -191,16 +97,69 @@
       margin-top: 10px;
     }
 
-    .success-box {
-      display: none;
+    .payment-box {
       background: #E1F5EE;
       border: 1.5px solid #1D9E75;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 24px;
+      margin-bottom: 20px;
+    }
+    .payment-box h3 { color: #0F6E56; font-size: 17px; margin-bottom: 6px; }
+    .price-tag { font-size: 34px; font-weight: bold; color: #0F6E56; margin: 10px 0; }
+    .price-tag span { font-size: 15px; color: #666; font-weight: normal; }
+
+    .payment-steps { background: #fff; border-radius: 8px; padding: 16px; margin: 14px 0; }
+    .payment-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 13px; color: #333; line-height: 1.5; }
+    .payment-step:last-child { margin-bottom: 0; }
+    .pstep-num {
+      width: 22px; height: 22px;
+      background: #1D9E75; color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: bold; flex-shrink: 0;
+    }
+
+    .confirm-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #1D9E75;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 12px;
       text-align: center;
-      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .auto-badge {
+      background: #0F6E56;
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      text-align: center;
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+
+    .timer-box {
+      background: #FAEEDA;
+      border: 1.5px solid #EF9F27;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #633806;
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .success-box {
+      background: #E1F5EE;
+      border: 1.5px solid #1D9E75;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
       color: #0F6E56;
-      font-size: 15px;
       line-height: 1.8;
     }
     .error-box {
@@ -208,20 +167,10 @@
       background: #FCEBEB;
       border: 1.5px solid #E53E3E;
       border-radius: 8px;
-      padding: 16px;
-      margin-top: 16px;
+      padding: 14px;
+      margin-top: 14px;
       color: #A32D2D;
       font-size: 14px;
-    }
-    .warning-box {
-      background: #FAEEDA;
-      border: 1.5px solid #EF9F27;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 12px;
-      color: #633806;
-      font-size: 13px;
-      line-height: 1.5;
     }
 
     footer {
@@ -232,11 +181,18 @@
       font-size: 13px;
       margin-top: 60px;
     }
+
+    /* AUTO APPROVAL COUNTDOWN */
+    .countdown {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0F6E56;
+      margin: 8px 0;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
     <div>
       <h1>🌱 SouthLink Market</h1>
@@ -250,32 +206,30 @@
     </nav>
   </header>
 
-  <!-- FORM -->
   <section class="form-section">
 
-    <!-- STEPS BAR -->
     <div class="steps-bar">
       <div class="step-pill active" id="pill-1">1. Your Details</div>
       <div class="step-pill" id="pill-2">2. Payment</div>
       <div class="step-pill" id="pill-3">3. Listed!</div>
     </div>
 
-    <!-- STEP 1 — FARMER DETAILS -->
+    <!-- STEP 1 -->
     <div id="step-1">
       <h2 class="form-title">🌾 Farmer Registration</h2>
-      <p class="form-sub">Fill in your details. Your produce will go live on the market after a small listing fee of <strong>5,000 SSP per month.</strong></p>
+      <p class="form-sub">Fill in your details below. Your listing goes live automatically within 2 hours of payment — no human approval needed.</p>
 
       <div class="form-group">
         <label>Full Name *</label>
-        <input type="text" id="full_name" placeholder="e.g. James Lado" required />
+        <input type="text" id="full_name" placeholder="e.g. James Lado" />
       </div>
       <div class="form-group">
-        <label>Phone Number (MTN Mobile Money number) *</label>
-        <input type="text" id="phone_number" placeholder="e.g. +211 922 882 019" required />
+        <label>Phone Number (MTN Mobile Money) *</label>
+        <input type="text" id="phone_number" placeholder="e.g. +211 922 882 019" />
       </div>
       <div class="form-group">
         <label>Location / Area *</label>
-        <input type="text" id="location" placeholder="e.g. Gudele, Juba" required />
+        <input type="text" id="location" placeholder="e.g. Gudele, Juba" />
       </div>
       <div class="form-group">
         <label>Main Crop / Produce *</label>
@@ -295,32 +249,35 @@
       </div>
       <div class="form-group">
         <label>Quantity Available *</label>
-        <input type="text" id="quantity" placeholder="e.g. 200kg, 5 bags, 3 crates" required />
+        <input type="text" id="quantity" placeholder="e.g. 200kg, 5 bags, 3 crates" />
       </div>
       <div class="form-group">
         <label>Price Per Unit *</label>
-        <input type="text" id="price_per_unit" placeholder="e.g. 50 SSP per kg, $10 per bag" required />
+        <input type="text" id="price_per_unit" placeholder="e.g. 50 SSP per kg" />
       </div>
 
-      <button class="submit-btn" onclick="goToPayment()">
-        Continue to Payment →
-      </button>
+      <button class="submit-btn" onclick="goToPayment()">Continue to Payment →</button>
     </div>
 
-    <!-- STEP 2 — PAYMENT -->
+    <!-- STEP 2 -->
     <div id="step-2" style="display:none">
-      <h2 class="form-title">💳 Listing Payment</h2>
-      <p class="form-sub">Your details have been saved. Complete payment to publish your listing on SouthLink Market.</p>
+      <h2 class="form-title">💳 Complete Payment</h2>
+      <p class="form-sub">Almost done! Send your listing fee via MTN Mobile Money and your produce will go live automatically.</p>
 
-      <div class="payment-box" style="display:block">
+      <div class="payment-box">
         <h3>Listing Fee</h3>
         <div class="price-tag">5,000 SSP <span>/ per month</span></div>
-        <p>Your produce will be visible to all buyers on SouthLink Market for 30 days.</p>
+
+        <div class="auto-badge">
+          🤖 FULLY AUTOMATIC — Once you submit your Transaction ID below,
+          your listing will go live within 2 hours automatically.
+          No human approval needed. Even if we are offline.
+        </div>
 
         <div class="payment-steps">
           <div class="payment-step">
             <div class="pstep-num">1</div>
-            <div>Open your <strong>MTN Mobile Money</strong> app or dial <strong>*165#</strong> on your phone</div>
+            <div>Dial <strong>*165#</strong> on your phone or open MTN Mobile Money app</div>
           </div>
           <div class="payment-step">
             <div class="pstep-num">2</div>
@@ -328,53 +285,73 @@
           </div>
           <div class="payment-step">
             <div class="pstep-num">3</div>
-            <div>Send <strong>5,000 SSP</strong> to this number: <strong style="color:#0F6E56;font-size:15px;">+211922882019</strong></div>
+            <div>Send <strong>5,000 SSP</strong> to: <strong style="color:#0F6E56;font-size:15px;">+211 922 882 019</strong></div>
           </div>
           <div class="payment-step">
             <div class="pstep-num">4</div>
-            <div>Enter your <strong>name as the reference</strong> so we can match your payment</div>
+            <div>Type your <strong>full name as reference</strong> when sending</div>
           </div>
           <div class="payment-step">
             <div class="pstep-num">5</div>
-            <div>Copy your <strong>MTN transaction ID</strong> from the confirmation SMS</div>
+            <div>You will receive an SMS with a <strong>Transaction ID</strong> e.g. <em>TXN123456789</em></div>
           </div>
           <div class="payment-step">
             <div class="pstep-num">6</div>
-            <div>Paste your transaction ID below and click <strong>"Confirm Payment"</strong></div>
+            <div>Paste that Transaction ID below and click <strong>"Submit & Go Live"</strong></div>
           </div>
         </div>
 
-        <div class="warning-box">
-          ⚠️ Your listing will be reviewed and activated within <strong>2 hours</strong> of payment confirmation. You will receive a WhatsApp confirmation from us.
-        </div>
+        <input type="text" class="confirm-input" id="transaction_id"
+               placeholder="Paste MTN Transaction ID here e.g. TXN123456789" />
 
-        <input type="text" class="confirm-input" id="transaction_id" placeholder="Paste your MTN transaction ID here e.g. TXN123456789" />
+        <div class="timer-box">
+          ⏱️ After submitting your Transaction ID — your listing will be
+          <strong>automatically activated within 2 hours.</strong>
+          You will receive a WhatsApp confirmation on your registered number.
+        </div>
       </div>
 
       <button class="submit-btn" onclick="confirmPayment()" id="confirm-btn">
-        ✅ Confirm Payment & Publish Listing
+        ✅ Submit & Go Live Automatically
       </button>
       <button class="back-btn" onclick="goBack()">← Go Back & Edit Details</button>
 
       <div class="error-box" id="error-box">
-        ❌ Please paste your MTN transaction ID before confirming.
+        ❌ Please paste your MTN Transaction ID before submitting.
       </div>
     </div>
 
-    <!-- STEP 3 — SUCCESS -->
+    <!-- STEP 3 SUCCESS -->
     <div id="step-3" style="display:none">
-      <div class="success-box" style="display:block">
-        <div style="font-size:48px;margin-bottom:12px">🎉</div>
-        <h3 style="font-size:20px;margin-bottom:12px">Payment Submitted Successfully!</h3>
-        <p>Thank you for registering with SouthLink Market.</p>
+      <div class="success-box">
+        <div style="font-size:56px;margin-bottom:16px">🎉</div>
+        <h3 style="font-size:22px;margin-bottom:12px;color:#0F6E56">
+          Payment Submitted Successfully!
+        </h3>
+        <p>Your listing has been received by SouthLink Market.</p>
         <br>
-        <p>Your listing will be <strong>reviewed and activated within 2 hours.</strong></p>
+
+        <div style="background:#fff;border-radius:10px;padding:16px;margin:16px 0;text-align:left">
+          <p style="font-size:13px;color:#333;margin-bottom:8px">
+            <strong>⏱️ Auto-Approval Countdown:</strong>
+          </p>
+          <div class="countdown" id="countdown-display">2:00:00</div>
+          <p style="font-size:12px;color:#666">
+            Your listing will go live automatically when this timer reaches zero.
+          </p>
+        </div>
+
+        <p>📱 A WhatsApp confirmation will be sent to:</p>
+        <p><strong id="confirm-phone" style="font-size:16px"></strong></p>
         <br>
-        <p>We will send you a <strong>WhatsApp confirmation</strong> to <span id="confirm-phone"></span> once your produce is live on the market.</p>
+        <p style="font-size:12px;color:#666">
+          Transaction ID: <strong id="confirm-txn"></strong>
+        </p>
         <br>
-        <p style="font-size:13px;color:#555">Transaction ID: <strong id="confirm-txn"></strong></p>
-        <br>
-        <a href="listings.html" style="display:inline-block;margin-top:8px;padding:12px 24px;background:#1D9E75;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold;">
+        <a href="listings.html"
+           style="display:inline-block;margin-top:12px;padding:14px 28px;
+                  background:#1D9E75;color:#fff;border-radius:8px;
+                  text-decoration:none;font-weight:bold;font-size:15px">
           View Market Listings →
         </a>
       </div>
@@ -382,7 +359,6 @@
 
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>SouthLink Market &copy; 2026 &nbsp;|&nbsp; Bangbe Emmanuel &nbsp;|&nbsp; Juba, South Sudan</p>
     <p style="margin-top:8px">
@@ -394,22 +370,29 @@
     </p>
   </footer>
 
-  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
+    // ── SUPABASE ──
     const SUPABASE_URL = 'https://vhlhpkvsvtudjyprjbre.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_f-os_-gLU61SQ9XpwdzTow_UDAly1Lz';
     const { createClient } = supabase;
     const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // ── EMAILJS ──
+    emailjs.init('p1jJeK3D7D5gbB-t9');
+    const EMAILJS_SERVICE  = 'southlink_service';
+    const EMAILJS_TEMPLATE = 'template_t78I0fa';
+
     let farmerData = {};
+    let countdownInterval = null;
 
     function goToPayment() {
-      const full_name    = document.getElementById('full_name').value.trim();
-      const phone_number = document.getElementById('phone_number').value.trim();
-      const location     = document.getElementById('location').value.trim();
-      const crop_type    = document.getElementById('crop_type').value;
-      const quantity     = document.getElementById('quantity').value.trim();
+      const full_name      = document.getElementById('full_name').value.trim();
+      const phone_number   = document.getElementById('phone_number').value.trim();
+      const location       = document.getElementById('location').value.trim();
+      const crop_type      = document.getElementById('crop_type').value;
+      const quantity       = document.getElementById('quantity').value.trim();
       const price_per_unit = document.getElementById('price_per_unit').value.trim();
 
       if (!full_name || !phone_number || !location || !crop_type || !quantity || !price_per_unit) {
@@ -419,7 +402,6 @@
 
       farmerData = { full_name, phone_number, location, crop_type, quantity, price_per_unit };
 
-      // Show step 2
       document.getElementById('step-1').style.display = 'none';
       document.getElementById('step-2').style.display = 'block';
       document.getElementById('pill-1').className = 'step-pill done';
@@ -444,24 +426,47 @@
 
       const btn = document.getElementById('confirm-btn');
       btn.disabled = true;
-      btn.textContent = 'Submitting...';
+      btn.textContent = 'Processing...';
 
+      // Calculate auto-approval time (2 hours from now)
+      const approvalTime = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString();
+
+      // Save to Supabase
       const { error } = await db.from('farmers').insert([{
         ...farmerData,
         transaction_id,
         payment_status: 'pending',
         listing_status: 'pending_review',
+        auto_approve_at: approvalTime,
         created_at: new Date().toISOString()
       }]);
 
       if (error) {
         btn.disabled = false;
-        btn.textContent = '✅ Confirm Payment & Publish Listing';
+        btn.textContent = '✅ Submit & Go Live Automatically';
         alert('Error: ' + error.message);
         return;
       }
 
-      // Show step 3
+      // Send automatic email notification
+      try {
+        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+          farmer_name:    farmerData.full_name,
+          farmer_phone:   farmerData.phone_number,
+          farmer_location: farmerData.location,
+          farmer_crop:    farmerData.crop_type,
+          farmer_quantity: farmerData.quantity,
+          farmer_price:   farmerData.price_per_unit,
+          transaction_id: transaction_id,
+          time:           new Date().toLocaleString()
+        });
+        console.log('Email notification sent!');
+      } catch (emailError) {
+        console.log('Email error:', emailError);
+        // Continue anyway — listing is saved
+      }
+
+      // Show success
       document.getElementById('step-2').style.display = 'none';
       document.getElementById('step-3').style.display = 'block';
       document.getElementById('pill-2').className = 'step-pill done';
@@ -469,6 +474,37 @@
       document.getElementById('confirm-phone').textContent = farmerData.phone_number;
       document.getElementById('confirm-txn').textContent = transaction_id;
       window.scrollTo(0, 0);
+
+      // Start 2 hour countdown
+      startCountdown(2 * 60 * 60);
+
+      // Auto approve after 2 hours
+      setTimeout(async () => {
+        await db.from('farmers')
+          .update({ listing_status: 'approved' })
+          .eq('transaction_id', transaction_id);
+        console.log('Listing auto-approved!');
+      }, 2 * 60 * 60 * 1000);
+    }
+
+    function startCountdown(seconds) {
+      const display = document.getElementById('countdown-display');
+      let remaining = seconds;
+      countdownInterval = setInterval(() => {
+        const h = Math.floor(remaining / 3600);
+        const m = Math.floor((remaining % 3600) / 60);
+        const s = remaining % 60;
+        display.textContent =
+          String(h).padStart(2,'0') + ':' +
+          String(m).padStart(2,'0') + ':' +
+          String(s).padStart(2,'0');
+        if (remaining <= 0) {
+          clearInterval(countdownInterval);
+          display.textContent = '✅ LIVE!';
+          display.style.color = '#1D9E75';
+        }
+        remaining--;
+      }, 1000);
     }
   </script>
 
