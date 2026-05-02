@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" id="html-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,166 +8,131 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background: #f9f9f9; color: #222; }
 
+    .lang-bar {
+      background: #0F6E56; padding: 6px 40px;
+      display: flex; justify-content: flex-end; align-items: center; gap: 8px;
+    }
+    .lang-btn {
+      padding: 4px 14px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      background: transparent; color: #fff; font-size: 13px; cursor: pointer;
+    }
+    .lang-btn.active { background: #fff; color: #0F6E56; font-weight: bold; }
+
     header {
-      background: #1D9E75;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: #1D9E75; padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
     }
     header h1 { color: #fff; font-size: 24px; }
     header p { color: #E1F5EE; font-size: 13px; }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 14px;
-    }
+    nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; }
     nav a:hover { text-decoration: underline; }
 
     .form-section {
-      max-width: 600px;
-      margin: 60px auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      max-width: 600px; margin: 60px auto;
+      background: #fff; border-radius: 16px;
+      padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
     .form-title { font-size: 26px; color: #0F6E56; margin-bottom: 8px; }
-    .form-sub {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 32px;
-      line-height: 1.5;
-    }
+    .form-sub { font-size: 14px; color: #666; margin-bottom: 32px; line-height: 1.5; }
     .form-group { margin-bottom: 20px; }
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 6px;
+    label { display: block; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 6px; }
+    input, select {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid #ddd; border-radius: 8px;
+      font-size: 14px; font-family: Arial, sans-serif;
+      background: #fafafa; color: #222; transition: border 0.2s;
     }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: Arial, sans-serif;
-      background: #fafafa;
-      color: #222;
-      transition: border 0.2s;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #1D9E75;
-      background: #fff;
-    }
-    textarea { resize: vertical; min-height: 80px; }
+    input:focus, select:focus { outline: none; border-color: #1D9E75; background: #fff; }
 
     .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: #1D9E75;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.2s;
+      width: 100%; padding: 16px;
+      background: #1D9E75; color: #fff;
+      font-size: 16px; font-weight: bold;
+      border: none; border-radius: 8px;
+      cursor: pointer; margin-top: 10px;
     }
     .submit-btn:hover { background: #0F6E56; }
     .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
 
     .success-box {
-      display: none;
-      background: #E1F5EE;
-      border: 1.5px solid #1D9E75;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      margin-top: 20px;
-      color: #0F6E56;
-      font-size: 15px;
-      line-height: 1.6;
+      display: none; background: #E1F5EE;
+      border: 1.5px solid #1D9E75; border-radius: 8px;
+      padding: 20px; text-align: center;
+      margin-top: 20px; color: #0F6E56;
+      font-size: 15px; line-height: 1.6;
     }
     .error-box {
-      display: none;
-      background: #FCEBEB;
-      border: 1.5px solid #E53E3E;
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 16px;
-      color: #A32D2D;
-      font-size: 14px;
+      display: none; background: #FCEBEB;
+      border: 1.5px solid #E53E3E; border-radius: 8px;
+      padding: 16px; margin-top: 16px;
+      color: #A32D2D; font-size: 14px;
     }
 
+    [dir="rtl"] nav a { margin-left: 0; margin-right: 20px; }
+    [dir="rtl"] .lang-bar { justify-content: flex-start; }
+    [dir="rtl"] body { font-family: Arial, 'Traditional Arabic', sans-serif; }
+
     footer {
-      background: #0F6E56;
-      color: #9FE1CB;
-      text-align: center;
-      padding: 24px;
-      font-size: 13px;
-      margin-top: 60px;
+      background: #0F6E56; color: #9FE1CB;
+      text-align: center; padding: 24px;
+      font-size: 13px; margin-top: 60px;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- LANGUAGE SWITCHER -->
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇸🇸 English</button>
+    <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 العربية</button>
+  </div>
+
   <header>
     <div>
       <h1>🌱 SouthLink Market</h1>
       <p>Juba, South Sudan</p>
     </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="farmer.html">Sell Produce</a>
-      <a href="listings.html">Buy Produce</a>
-      <a href="buyer.html">Register as Buyer</a>
+      <a href="index.html" id="nav-home">Home</a>
+      <a href="farmer.html" id="nav-farmer">Sell Produce</a>
+      <a href="listings.html" id="nav-listings">Buy Produce</a>
+      <a href="buyer.html" id="nav-buyer">Register as Buyer</a>
     </nav>
   </header>
 
-  <!-- FORM -->
   <section class="form-section">
-    <h2 class="form-title">🛒 Buyer Registration</h2>
-    <p class="form-sub">Register as a buyer and we will connect you directly to fresh produce from local farmers in South Sudan. No middlemen. Reliable supply. Fair prices.</p>
+    <h2 class="form-title" id="form-title">🛒 Buyer Registration</h2>
+    <p class="form-sub" id="form-sub">Register as a buyer and we will connect you directly to fresh produce from local farmers in South Sudan. No middlemen. Reliable supply. Fair prices.</p>
 
     <div class="form-group">
-      <label>Full Name / Business Name *</label>
-      <input type="text" id="full_name" placeholder="e.g. Mary's Restaurant" required />
+      <label id="lbl-name">Full Name / Business Name *</label>
+      <input type="text" id="full_name" placeholder="e.g. Mary's Restaurant" />
     </div>
-
     <div class="form-group">
-      <label>Phone Number *</label>
-      <input type="text" id="phone_number" placeholder="e.g. +211 912 345 678" required />
+      <label id="lbl-phone">Phone Number *</label>
+      <input type="text" id="phone_number" placeholder="e.g. +211 922 882 019" />
     </div>
-
     <div class="form-group">
-      <label>Type of Buyer *</label>
+      <label id="lbl-type">Type of Buyer *</label>
       <select id="business_type">
-        <option value="">Select your type...</option>
-        <option>Restaurant / Hotel</option>
-        <option>Food Trader / Wholesaler</option>
-        <option>School / Institution</option>
-        <option>NGO / UN Kitchen</option>
-        <option>Individual Household</option>
-        <option>Other</option>
+        <option value="" id="type-select">Select your type...</option>
+        <option id="type-1">Restaurant / Hotel</option>
+        <option id="type-2">Food Trader / Wholesaler</option>
+        <option id="type-3">School / Institution</option>
+        <option id="type-4">NGO / UN Kitchen</option>
+        <option id="type-5">Individual Household</option>
+        <option id="type-6">Other</option>
       </select>
     </div>
-
     <div class="form-group">
-      <label>Location in Juba *</label>
-      <input type="text" id="location" placeholder="e.g. Gudele, Juba" required />
+      <label id="lbl-location">Location in Juba *</label>
+      <input type="text" id="location" placeholder="e.g. Gudele, Juba" />
     </div>
-
     <div class="form-group">
-      <label>What Produce Do You Need? *</label>
+      <label id="lbl-produce">What Produce Do You Need? *</label>
       <select id="produce_needed">
-        <option value="">Select produce...</option>
+        <option value="" id="produce-select">Select produce...</option>
         <option>Maize</option>
         <option>Cassava</option>
         <option>Groundnuts</option>
@@ -181,58 +146,114 @@
         <option>Other</option>
       </select>
     </div>
-
     <div class="form-group">
-      <label>Quantity Needed *</label>
-      <input type="text" id="quantity_needed" placeholder="e.g. 500kg per week, 10 bags per month" required />
+      <label id="lbl-qty">Quantity Needed *</label>
+      <input type="text" id="quantity_needed" placeholder="e.g. 500kg per week" />
     </div>
 
-    <button class="submit-btn" onclick="submitBuyer()" id="submit-btn">
+    <button class="submit-btn" id="submit-btn" onclick="submitBuyer()">
       Register as Buyer ✓
     </button>
 
     <div class="success-box" id="success-box">
-      ✅ Thank you for registering with SouthLink Market!<br><br>
-      We will contact you on WhatsApp within 24 hours to connect you with the right farmers.<br><br>
-      <strong>Welcome to SouthLink Market! 🌱</strong>
+      ✅ <span id="success-msg">Thank you for registering with SouthLink Market! We will contact you on WhatsApp within 24 hours to connect you with the right farmers. Welcome to SouthLink Market! 🌱</span>
     </div>
-
     <div class="error-box" id="error-box">
-      ❌ Something went wrong. Please check your details and try again.
+      ❌ <span id="error-msg">Something went wrong. Please check your details and try again.</span>
     </div>
-
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>SouthLink Market &copy; 2026 &nbsp;|&nbsp; Bangbe Emmanuel &nbsp;|&nbsp; Juba, South Sudan</p>
     <p style="margin-top:8px">
-        <a href="https://wa.me/211922882019?text=Hello%20SouthLink%20Market%2C%20I%20want%20to%20know%20more" 
-           style="color:#9FE1CB;font-weight:bold;">
-          💬 Contact us on WhatsApp
-        </a>
-        &nbsp;|&nbsp; southlinkmarket@gmail.com
+      <a href="https://wa.me/211922882019?text=Hello%20SouthLink%20Market%2C%20I%20want%20to%20know%20more"
+         style="color:#9FE1CB;font-weight:bold;">💬 Contact us on WhatsApp</a>
+      &nbsp;|&nbsp; southlinkmarket@gmail.com
     </p>
-</footer>
+  </footer>
 
-  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
   <script>
     const SUPABASE_URL = 'https://vhlhpkvsvtudjyprjbre.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_f-os_-gLU61SQ9XpwdzTow_UDAly1Lz';
-
     const { createClient } = supabase;
     const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    const translations = {
+      en: {
+        'nav-home':'Home','nav-farmer':'Sell Produce',
+        'nav-listings':'Buy Produce','nav-buyer':'Register as Buyer',
+        'form-title':'🛒 Buyer Registration',
+        'form-sub':'Register as a buyer and we will connect you directly to fresh produce from local farmers in South Sudan. No middlemen. Reliable supply. Fair prices.',
+        'lbl-name':'Full Name / Business Name *',
+        'lbl-phone':'Phone Number *',
+        'lbl-type':'Type of Buyer *',
+        'type-select':'Select your type...',
+        'type-1':'Restaurant / Hotel',
+        'type-2':'Food Trader / Wholesaler',
+        'type-3':'School / Institution',
+        'type-4':'NGO / UN Kitchen',
+        'type-5':'Individual Household',
+        'type-6':'Other',
+        'lbl-location':'Location in Juba *',
+        'lbl-produce':'What Produce Do You Need? *',
+        'produce-select':'Select produce...',
+        'lbl-qty':'Quantity Needed *',
+        'submit-btn':'Register as Buyer ✓',
+        'success-msg':'Thank you for registering with SouthLink Market! We will contact you on WhatsApp within 24 hours to connect you with the right farmers. Welcome to SouthLink Market! 🌱',
+        'error-msg':'Something went wrong. Please check your details and try again.',
+      },
+      ar: {
+        'nav-home':'الرئيسية','nav-farmer':'بيع المنتجات',
+        'nav-listings':'شراء المنتجات','nav-buyer':'تسجيل كمشترٍ',
+        'form-title':'🛒 تسجيل المشتري',
+        'form-sub':'سجّل كمشترٍ وسنربطك مباشرةً بالمنتجات الطازجة من المزارعين المحليين في جنوب السودان. بلا وسطاء. إمداد موثوق. أسعار عادلة.',
+        'lbl-name':'الاسم الكامل / اسم العمل *',
+        'lbl-phone':'رقم الهاتف *',
+        'lbl-type':'نوع المشتري *',
+        'type-select':'اختر نوعك...',
+        'type-1':'مطعم / فندق',
+        'type-2':'تاجر غذاء / تاجر جملة',
+        'type-3':'مدرسة / مؤسسة',
+        'type-4':'منظمة إنسانية / مطبخ أممي',
+        'type-5':'أسرة منزلية',
+        'type-6':'أخرى',
+        'lbl-location':'الموقع في جوبا *',
+        'lbl-produce':'ما المنتج الذي تحتاجه؟ *',
+        'produce-select':'اختر المنتج...',
+        'lbl-qty':'الكمية المطلوبة *',
+        'submit-btn':'تسجيل كمشترٍ ✓',
+        'success-msg':'شكراً لتسجيلك في سوق ساوث لينك! سنتواصل معك عبر واتساب خلال 24 ساعة لربطك بالمزارعين المناسبين. مرحباً بك! 🌱',
+        'error-msg':'حدث خطأ ما. يرجى التحقق من بياناتك والمحاولة مرة أخرى.',
+      }
+    };
+
+    function setLang(lang) {
+      const html = document.getElementById('html-root');
+      html.setAttribute('lang', lang);
+      html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      document.getElementById('btn-en').className = 'lang-btn'+(lang==='en'?' active':'');
+      document.getElementById('btn-ar').className = 'lang-btn'+(lang==='ar'?' active':'');
+      const t = translations[lang];
+      for (const [id, text] of Object.entries(t)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      }
+      localStorage.setItem('slm-lang', lang);
+    }
+
+    const saved = localStorage.getItem('slm-lang');
+    if (saved) setLang(saved);
+
     async function submitBuyer() {
-      const full_name      = document.getElementById('full_name').value.trim();
-      const phone_number   = document.getElementById('phone_number').value.trim();
-      const business_type  = document.getElementById('business_type').value;
-      const location       = document.getElementById('location').value.trim();
-      const produce_needed = document.getElementById('produce_needed').value;
+      const full_name       = document.getElementById('full_name').value.trim();
+      const phone_number    = document.getElementById('phone_number').value.trim();
+      const business_type   = document.getElementById('business_type').value;
+      const location        = document.getElementById('location').value.trim();
+      const produce_needed  = document.getElementById('produce_needed').value;
       const quantity_needed = document.getElementById('quantity_needed').value.trim();
 
-      if (!full_name || !phone_number || !business_type || !location || !produce_needed || !quantity_needed) {
+      if (!full_name||!phone_number||!business_type||!location||!produce_needed||!quantity_needed) {
         alert('Please fill in all fields before submitting.');
         return;
       }
@@ -242,22 +263,17 @@
       btn.textContent = 'Submitting...';
 
       const { error } = await db.from('buyers').insert([{
-        full_name,
-        phone_number,
-        business_type,
-        location,
-        produce_needed,
-        quantity_needed
+        full_name, phone_number, business_type,
+        location, produce_needed, quantity_needed
       }]);
 
       if (error) {
         document.getElementById('error-box').style.display = 'block';
-        document.getElementById('error-box').textContent = '❌ Error: ' + error.message;
         btn.disabled = false;
-        btn.textContent = 'Register as Buyer ✓';
+        btn.textContent = translations[localStorage.getItem('slm-lang')||'en']['submit-btn'];
       } else {
         document.getElementById('success-box').style.display = 'block';
-        btn.textContent = 'Submitted! ✓';
+        btn.textContent = '✅ Submitted!';
         ['full_name','phone_number','location','quantity_needed'].forEach(id => {
           document.getElementById(id).value = '';
         });
@@ -266,6 +282,5 @@
       }
     }
   </script>
-
 </body>
 </html>
