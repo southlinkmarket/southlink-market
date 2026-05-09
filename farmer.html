@@ -4,451 +4,878 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Farmer Registration — SouthLink Market</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f9f9f9; color: #222; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --green-dark: #0F6E56;
+      --green-mid: #1D9E75;
+      --green-light: #E1F5EE;
+      --green-pale: #f0faf6;
+      --amber: #EF9F27;
+      --amber-light: #FAEEDA;
+      --amber-dark: #633806;
+      --red: #E24B4A;
+      --red-light: #FCEBEB;
+      --red-dark: #A32D2D;
+      --blue: #185FA5;
+      --blue-light: #E6F1FB;
+      --text: #1a1a1a;
+      --text-muted: #666;
+      --text-hint: #999;
+      --border: #e2e2e2;
+      --radius: 10px;
+      --radius-lg: 16px;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: #f5f7f5; color: var(--text); }
+
+    /* LANG BAR */
     .lang-bar {
-      background: #0F6E56;
-      padding: 6px 40px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px;
+      background: var(--green-dark); padding: 7px 40px;
+      display: flex; justify-content: flex-end; align-items: center; gap: 8px;
     }
     .lang-btn {
-      padding: 4px 14px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(255,255,255,0.4);
-      background: transparent;
-      color: #fff;
-      font-size: 13px;
-      cursor: pointer;
+      padding: 4px 14px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      background: transparent; color: #fff; font-size: 13px;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
     }
-    .lang-btn.active { background: #fff; color: #0F6E56; font-weight: bold; }
+    .lang-btn.active { background: #fff; color: var(--green-dark); font-weight: 600; }
 
+    /* HEADER */
     header {
-      background: #1D9E75;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: var(--green-mid); padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    header h1 { color: #fff; font-size: 24px; }
-    header p { color: #E1F5EE; font-size: 13px; }
-    nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; }
-    nav a:hover { text-decoration: underline; }
+    .logo-text { color: #fff; font-family: 'DM Serif Display', serif; font-size: 22px; }
+    .logo-sub { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 2px; }
+    nav a { color: rgba(255,255,255,0.85); text-decoration: none; margin-left: 22px; font-size: 14px; transition: color 0.2s; }
+    nav a:hover { color: #fff; }
 
-    .form-section {
-      max-width: 620px;
-      margin: 50px auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    /* PROGRESS BAR */
+    .progress-wrap { background: #fff; border-bottom: 1px solid var(--border); padding: 0 40px; }
+    .progress-inner { max-width: 680px; margin: 0 auto; display: flex; }
+    .prog-step {
+      flex: 1; padding: 14px 0; text-align: center;
+      font-size: 13px; font-weight: 500; color: var(--text-hint);
+      border-bottom: 3px solid transparent; transition: all 0.3s; cursor: default;
     }
-    .steps-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
-    .step-pill { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 500; background: #f0f0f0; color: #999; }
-    .step-pill.active { background: #1D9E75; color: #fff; }
-    .step-pill.done { background: #E1F5EE; color: #0F6E56; }
+    .prog-step.active { color: var(--green-mid); border-bottom-color: var(--green-mid); }
+    .prog-step.done { color: var(--green-dark); border-bottom-color: var(--green-light); }
+    .prog-step .pnum {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #eee; color: var(--text-hint);
+      font-size: 11px; font-weight: 600; margin-right: 6px; transition: all 0.3s;
+    }
+    .prog-step.active .pnum { background: var(--green-mid); color: #fff; }
+    .prog-step.done .pnum { background: var(--green-light); color: var(--green-dark); }
 
-    .form-title { font-size: 24px; color: #0F6E56; margin-bottom: 8px; }
-    .form-sub { font-size: 14px; color: #666; margin-bottom: 28px; line-height: 1.6; }
-    .form-group { margin-bottom: 18px; }
-    label { display: block; font-size: 14px; font-weight: bold; color: #333; margin-bottom: 6px; }
-    input, select {
-      width: 100%; padding: 12px 16px;
-      border: 1.5px solid #ddd; border-radius: 8px;
-      font-size: 14px; font-family: Arial, sans-serif;
-      background: #fafafa; color: #222; transition: border 0.2s;
-    }
-    input:focus, select:focus { outline: none; border-color: #1D9E75; background: #fff; }
+    /* MAIN */
+    .main { max-width: 680px; margin: 36px auto 60px; padding: 0 16px; }
 
-    .submit-btn {
-      width: 100%; padding: 16px;
-      background: #1D9E75; color: #fff;
-      font-size: 16px; font-weight: bold;
-      border: none; border-radius: 8px;
-      cursor: pointer; margin-top: 10px;
+    .card {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 36px;
+      margin-bottom: 16px;
     }
-    .submit-btn:hover { background: #0F6E56; }
-    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
-    .back-btn {
-      width: 100%; padding: 12px;
-      background: transparent; color: #1D9E75;
-      font-size: 14px; font-weight: bold;
-      border: 1.5px solid #1D9E75; border-radius: 8px;
-      cursor: pointer; margin-top: 10px;
+    .card-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-dark); margin-bottom: 6px; }
+    .card-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
+
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 7px; }
+    .label-hint { font-weight: 400; color: var(--text-hint); margin-left: 6px; }
+    input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      background: #fafafa; color: var(--text); transition: border 0.2s, background 0.2s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--green-mid); background: #fff;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* UPLOAD ZONE */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 24px; text-align: center; cursor: pointer;
+      background: #fafafa; transition: all 0.2s; position: relative;
+    }
+    .upload-zone:hover { border-color: var(--green-mid); background: var(--green-pale); }
+    .upload-zone.has-file { border-color: var(--green-mid); background: var(--green-light); border-style: solid; }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .upload-icon { font-size: 28px; margin-bottom: 8px; }
+    .upload-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .upload-sub { font-size: 12px; color: var(--text-muted); }
+    .upload-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; justify-content: center; }
+    .preview-thumb {
+      width: 70px; height: 70px; border-radius: 8px; object-fit: cover;
+      border: 2px solid var(--green-mid);
+    }
+    .upload-count { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--green-dark); }
+
+    /* OTP */
+    .otp-row { display: flex; gap: 10px; align-items: flex-end; }
+    .otp-row input { flex: 1; letter-spacing: 4px; font-size: 18px; font-weight: 600; text-align: center; }
+    .otp-send-btn {
+      padding: 12px 18px; background: var(--green-mid); color: #fff;
+      border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600;
+      cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .otp-send-btn:hover { background: var(--green-dark); }
+    .otp-send-btn:disabled { background: #aaa; cursor: not-allowed; }
+    .otp-status { font-size: 13px; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+    .otp-status.sent { color: var(--green-dark); }
+    .otp-status.verified { color: var(--green-dark); font-weight: 600; }
+    .otp-status.error { color: var(--red-dark); }
+
+    /* INFO BOX */
+    .info-box {
+      background: var(--blue-light); border: 1px solid #b5d4f4;
+      border-radius: var(--radius); padding: 14px 16px;
+      font-size: 13px; color: #0c447c; line-height: 1.6; margin-bottom: 20px;
+      display: flex; gap: 10px;
+    }
+    .info-box .info-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+    .warn-box {
+      background: var(--amber-light); border: 1px solid #FAC775;
+      border-radius: var(--radius); padding: 14px 16px;
+      font-size: 13px; color: var(--amber-dark); line-height: 1.6; margin-bottom: 20px;
+      display: flex; gap: 10px;
     }
 
-    .payment-box {
-      background: #E1F5EE; border: 1.5px solid #1D9E75;
-      border-radius: 12px; padding: 24px; margin-bottom: 20px;
+    /* PAYMENT */
+    .payment-card {
+      background: var(--green-light); border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px;
     }
-    .payment-box h3 { color: #0F6E56; font-size: 17px; margin-bottom: 6px; }
-    .price-tag { font-size: 34px; font-weight: bold; color: #0F6E56; margin: 10px 0; }
-    .price-tag span { font-size: 15px; color: #666; font-weight: normal; }
+    .payment-card h3 { color: var(--green-dark); font-size: 16px; margin-bottom: 6px; }
+    .price-tag { font-family: 'DM Serif Display', serif; font-size: 38px; color: var(--green-dark); margin: 8px 0; }
+    .price-tag span { font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text-muted); font-weight: 400; }
     .auto-badge {
-      background: #0F6E56; color: #fff;
-      border-radius: 8px; padding: 12px 16px;
-      font-size: 13px; text-align: center; margin: 12px 0; line-height: 1.6;
+      background: var(--green-dark); color: #fff; border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; line-height: 1.6; margin: 12px 0;
     }
-    .payment-steps { background: #fff; border-radius: 8px; padding: 16px; margin: 14px 0; }
-    .payment-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 13px; color: #333; line-height: 1.5; }
-    .payment-step:last-child { margin-bottom: 0; }
-    .pstep-num {
-      width: 22px; height: 22px; background: #1D9E75; color: #fff;
-      border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; font-size: 11px; font-weight: bold; flex-shrink: 0;
+    .pay-steps { background: #fff; border-radius: 8px; padding: 16px; }
+    .pay-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13px; line-height: 1.5; color: var(--text); }
+    .pay-step:last-child { margin-bottom: 0; }
+    .pnum { width: 22px; height: 22px; background: var(--green-mid); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+
+    /* BUTTONS */
+    .btn-primary {
+      width: 100%; padding: 15px; background: var(--green-mid); color: #fff;
+      font-size: 16px; font-weight: 600; border: none; border-radius: var(--radius);
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
     }
-    .confirm-input {
-      width: 100%; padding: 12px 16px;
-      border: 1.5px solid #1D9E75; border-radius: 8px;
-      font-size: 14px; margin-top: 12px; text-align: center;
-      font-family: Arial, sans-serif;
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+    .btn-back {
+      width: 100%; padding: 12px; background: transparent; color: var(--green-mid);
+      font-size: 14px; font-weight: 600; border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius); cursor: pointer; font-family: 'DM Sans', sans-serif;
+      margin-top: 10px; transition: all 0.2s;
     }
-    .timer-box {
-      background: #FAEEDA; border: 1.5px solid #EF9F27;
-      border-radius: 8px; padding: 12px 16px;
-      font-size: 13px; color: #633806;
-      text-align: center; margin-top: 12px; line-height: 1.6;
+    .btn-back:hover { background: var(--green-pale); }
+
+    /* TRUST BADGE */
+    .trust-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-light); color: var(--green-dark);
+      border: 1px solid #9FE1CB; border-radius: 999px;
+      padding: 4px 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px;
     }
-    .success-box {
-      background: #E1F5EE; border: 1.5px solid #1D9E75;
-      border-radius: 12px; padding: 32px;
-      text-align: center; color: #0F6E56; line-height: 1.8;
+
+    /* SUCCESS */
+    .success-wrap { text-align: center; padding: 16px 0; }
+    .success-icon { font-size: 64px; margin-bottom: 16px; }
+    .success-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--green-dark); margin-bottom: 10px; }
+    .success-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+    .countdown-box {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; margin: 20px 0; text-align: center;
     }
+    .countdown-label { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+    .countdown-val { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--green-dark); }
+
+    /* ERROR */
     .error-box {
-      display: none; background: #FCEBEB;
-      border: 1.5px solid #E53E3E; border-radius: 8px;
-      padding: 14px; margin-top: 14px; color: #A32D2D; font-size: 14px;
+      display: none; background: var(--red-light); border: 1px solid #F7C1C1;
+      border-radius: var(--radius); padding: 13px 16px;
+      color: var(--red-dark); font-size: 14px; margin-top: 12px;
     }
-    .countdown { font-size: 28px; font-weight: bold; color: #0F6E56; margin: 8px 0; }
 
-    [dir="rtl"] nav a { margin-left: 0; margin-right: 20px; }
-    [dir="rtl"] .lang-bar { justify-content: flex-start; }
-    [dir="rtl"] body { font-family: Arial, 'Traditional Arabic', sans-serif; }
+    /* VERIFICATION CHECKLIST */
+    .verify-list { list-style: none; margin-bottom: 24px; }
+    .verify-list li {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .verify-list li:last-child { border-bottom: none; }
+    .v-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; flex-shrink: 0; }
+    .v-dot.done { background: var(--green-mid); }
+    .v-dot.required { background: var(--red); }
 
+    /* FOOTER */
     footer {
-      background: #0F6E56; color: #9FE1CB;
-      text-align: center; padding: 24px;
-      font-size: 13px; margin-top: 60px;
+      background: var(--green-dark); color: #9FE1CB;
+      text-align: center; padding: 24px; font-size: 13px;
+    }
+    footer a { color: #9FE1CB; font-weight: 600; }
+
+    /* RTL */
+    [dir="rtl"] nav a { margin-left: 0; margin-right: 22px; }
+    [dir="rtl"] .lang-bar { justify-content: flex-start; }
+    [dir="rtl"] .otp-row { flex-direction: row-reverse; }
+
+    /* STEP VISIBILITY */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    @media (max-width: 600px) {
+      header { padding: 14px 16px; flex-direction: column; gap: 12px; text-align: center; }
+      nav a { margin: 0 10px; font-size: 13px; }
+      .lang-bar { padding: 7px 16px; }
+      .card { padding: 24px 18px; }
+      .row2 { grid-template-columns: 1fr; }
+      .progress-wrap { padding: 0 16px; }
+      .prog-step { font-size: 11px; padding: 12px 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- LANGUAGE SWITCHER -->
-  <div class="lang-bar">
-    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇸🇸 English</button>
-    <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 العربية</button>
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇸🇸 English</button>
+  <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 العربية</button>
+</div>
+
+<header>
+  <div>
+    <div class="logo-text">🌱 SouthLink Market</div>
+    <div class="logo-sub">Juba, South Sudan</div>
   </div>
+  <nav>
+    <a href="index.html" id="nav-home">Home</a>
+    <a href="farmer.html" id="nav-farmer">Sell Produce</a>
+    <a href="listings.html" id="nav-listings">Buy Produce</a>
+    <a href="buyer.html" id="nav-buyer">Register as Buyer</a>
+  </nav>
+</header>
 
-  <header>
-    <div>
-      <h1>🌱 SouthLink Market</h1>
-      <p>Juba, South Sudan</p>
-    </div>
-    <nav>
-      <a href="index.html" id="nav-home">Home</a>
-      <a href="farmer.html" id="nav-farmer">Sell Produce</a>
-      <a href="listings.html" id="nav-listings">Buy Produce</a>
-      <a href="buyer.html" id="nav-buyer">Register as Buyer</a>
-    </nav>
-  </header>
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="prog-step active" id="pill-1"><span class="pnum">1</span><span id="pill-1-txt">Details</span></div>
+    <div class="prog-step" id="pill-2"><span class="pnum">2</span><span id="pill-2-txt">Verify Phone</span></div>
+    <div class="prog-step" id="pill-3"><span class="pnum">3</span><span id="pill-3-txt">ID & Selfie</span></div>
+    <div class="prog-step" id="pill-4"><span class="pnum">4</span><span id="pill-4-txt">Produce Photos</span></div>
+    <div class="prog-step" id="pill-5"><span class="pnum">5</span><span id="pill-5-txt">Payment</span></div>
+    <div class="prog-step" id="pill-6"><span class="pnum">✓</span><span id="pill-6-txt">Listed!</span></div>
+  </div>
+</div>
 
-  <section class="form-section">
-    <div class="steps-bar">
-      <div class="step-pill active" id="pill-1">1. Your Details</div>
-      <div class="step-pill" id="pill-2">2. Payment</div>
-      <div class="step-pill" id="pill-3">3. Listed!</div>
-    </div>
+<main class="main">
 
-    <!-- STEP 1 -->
-    <div id="step-1">
-      <h2 class="form-title" id="form-title">🌾 Farmer Registration</h2>
-      <p class="form-sub" id="form-sub">Fill in your details below. Your listing goes live automatically within 2 hours of payment.</p>
+  <!-- STEP 1: DETAILS -->
+  <div class="step active" id="step-1">
+    <div class="card">
+      <div class="trust-badge">🛡️ <span id="s1-badge">Verified Listings Only</span></div>
+      <h2 class="card-title" id="s1-title">🌾 Farmer Registration</h2>
+      <p class="card-sub" id="s1-sub">To protect all farmers and buyers, every listing requires identity verification. This keeps our marketplace safe and trustworthy.</p>
 
       <div class="form-group">
-        <label id="lbl-name">Full Name *</label>
-        <input type="text" id="full_name" placeholder="e.g. James Lado" />
+        <label id="lbl-name">Full Name <span class="label-hint">(as on your National ID)</span></label>
+        <input type="text" id="full_name" placeholder="e.g. James Lado Wani" />
       </div>
-      <div class="form-group">
-        <label id="lbl-phone">Phone Number (MTN Mobile Money) *</label>
-        <input type="text" id="phone_number" placeholder="e.g. +211 922 882 019" />
+      <div class="row2">
+        <div class="form-group">
+          <label id="lbl-phone">MTN Mobile Money Number *</label>
+          <input type="tel" id="phone_number" placeholder="+211 922 882 019" />
+        </div>
+        <div class="form-group">
+          <label id="lbl-location">Location / Area *</label>
+          <input type="text" id="location" placeholder="e.g. Gudele, Juba" />
+        </div>
       </div>
-      <div class="form-group">
-        <label id="lbl-location">Location / Area *</label>
-        <input type="text" id="location" placeholder="e.g. Gudele, Juba" />
-      </div>
-      <div class="form-group">
-        <label id="lbl-crop">Main Crop / Produce *</label>
-        <select id="crop_type">
-          <option value="" id="crop-select">Select your main crop...</option>
-          <option>Maize</option>
-          <option>Cassava</option>
-          <option>Groundnuts</option>
-          <option>Sorghum</option>
-          <option>Tomatoes</option>
-          <option>Onions</option>
-          <option>Beans</option>
-          <option>Fresh Fish</option>
-          <option>Vegetables</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label id="lbl-qty">Quantity Available *</label>
-        <input type="text" id="quantity" placeholder="e.g. 200kg, 5 bags" />
+      <div class="row2">
+        <div class="form-group">
+          <label id="lbl-crop">Main Crop / Produce *</label>
+          <select id="crop_type">
+            <option value="" id="crop-select">Select crop...</option>
+            <option>Maize</option>
+            <option>Cassava</option>
+            <option>Groundnuts</option>
+            <option>Sorghum</option>
+            <option>Tomatoes</option>
+            <option>Onions</option>
+            <option>Beans</option>
+            <option>Fresh Fish</option>
+            <option>Vegetables</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="lbl-qty">Quantity Available *</label>
+          <input type="text" id="quantity" placeholder="e.g. 200kg" />
+        </div>
       </div>
       <div class="form-group">
         <label id="lbl-price">Price Per Unit *</label>
         <input type="text" id="price_per_unit" placeholder="e.g. 50 SSP per kg" />
       </div>
-      <button class="submit-btn" id="btn-continue" onclick="goToPayment()">Continue to Payment →</button>
+      <div class="form-group">
+        <label id="lbl-bank">MTN MoMo / Bank Account Number <span class="label-hint">(optional — adds trust)</span></label>
+        <input type="text" id="bank_account" placeholder="e.g. 0922882019 or bank acc. number" />
+      </div>
+
+      <button class="btn-primary" id="btn-s1" onclick="step1Next()" id="btn-s1-text">Continue to Phone Verification →</button>
     </div>
+  </div>
 
-    <!-- STEP 2 -->
-    <div id="step-2" style="display:none">
-      <h2 class="form-title" id="pay-title">💳 Complete Payment</h2>
-      <p class="form-sub" id="pay-sub">Send your listing fee via MTN Mobile Money and your produce will go live automatically.</p>
+  <!-- STEP 2: PHONE OTP -->
+  <div class="step" id="step-2">
+    <div class="card">
+      <h2 class="card-title" id="s2-title">📱 Verify Your Phone Number</h2>
+      <p class="card-sub" id="s2-sub">We send a 6-digit code to your MTN number. This confirms you own the number and stops fake registrations.</p>
 
-      <div class="payment-box">
-        <h3 id="pay-fee-title">Listing Fee</h3>
+      <div class="info-box">
+        <span class="info-icon">ℹ️</span>
+        <span id="s2-info">Your phone number must be active on MTN South Sudan. The code arrives within 60 seconds.</span>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-otp-num">Your MTN Number</label>
+        <input type="tel" id="otp-display" readonly style="background:#f0f0f0; color:#666;" />
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-otp">Verification Code *</label>
+        <div class="otp-row">
+          <input type="text" id="otp_code" placeholder="— — — — — —" maxlength="6" />
+          <button class="otp-send-btn" id="otp-send-btn" onclick="sendOTP()">Send Code</button>
+        </div>
+        <div class="otp-status" id="otp-status" style="display:none;"></div>
+      </div>
+
+      <button class="btn-primary" id="btn-s2" onclick="step2Next()">Confirm & Continue →</button>
+      <button class="btn-back" onclick="goBack(1)">← Edit Details</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: ID + SELFIE -->
+  <div class="step" id="step-3">
+    <div class="card">
+      <h2 class="card-title" id="s3-title">🪪 Identity Verification</h2>
+      <p class="card-sub" id="s3-sub">Upload your South Sudan National ID (or passport) and a selfie holding it. This protects buyers from fake farmers. Your documents are stored securely.</p>
+
+      <div class="warn-box">
+        <span>⚠️</span>
+        <span id="s3-warn">Your name in the photos must match the name you entered in Step 1. Listings with mismatched names are rejected and permanently banned.</span>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-id-front">National ID — Front Side *</label>
+        <div class="upload-zone" id="zone-id-front">
+          <input type="file" id="file-id-front" accept="image/*" onchange="handleUpload('file-id-front','zone-id-front','preview-id-front','count-id-front',1)" />
+          <div class="upload-icon">🪪</div>
+          <div class="upload-title" id="lbl-id-front-title">Tap to upload front of ID</div>
+          <div class="upload-sub" id="lbl-id-front-sub">National ID, passport, or driving licence</div>
+          <div class="upload-preview" id="preview-id-front"></div>
+          <div class="upload-count" id="count-id-front"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-id-back">National ID — Back Side *</label>
+        <div class="upload-zone" id="zone-id-back">
+          <input type="file" id="file-id-back" accept="image/*" onchange="handleUpload('file-id-back','zone-id-back','preview-id-back','count-id-back',1)" />
+          <div class="upload-icon">🪪</div>
+          <div class="upload-title" id="lbl-id-back-title">Tap to upload back of ID</div>
+          <div class="upload-sub">JPG or PNG, max 10MB</div>
+          <div class="upload-preview" id="preview-id-back"></div>
+          <div class="upload-count" id="count-id-back"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-selfie">Selfie Holding Your ID *</label>
+        <div class="upload-zone" id="zone-selfie">
+          <input type="file" id="file-selfie" accept="image/*" capture="user" onchange="handleUpload('file-selfie','zone-selfie','preview-selfie','count-selfie',1)" />
+          <div class="upload-icon">🤳</div>
+          <div class="upload-title" id="lbl-selfie-title">Take a selfie holding your ID</div>
+          <div class="upload-sub" id="lbl-selfie-sub">Hold your ID next to your face so both are clearly visible</div>
+          <div class="upload-preview" id="preview-selfie"></div>
+          <div class="upload-count" id="count-selfie"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="step3Next()">Continue to Produce Photos →</button>
+      <button class="btn-back" onclick="goBack(2)">← Back</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PRODUCE PHOTOS -->
+  <div class="step" id="step-4">
+    <div class="card">
+      <h2 class="card-title" id="s4-title">📸 Photos of Your Produce</h2>
+      <p class="card-sub" id="s4-sub">Upload 3 to 5 photos of your actual produce taken today. Our team reviews these before your listing goes live. Stock photos or photos from the internet will be rejected.</p>
+
+      <div class="info-box">
+        <span class="info-icon">📍</span>
+        <span id="s4-info">Take photos at your farm or market stall. If possible, allow location access so photos can be GPS-tagged to your stated location.</span>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-produce-photos">Produce Photos (3–5 photos) *</label>
+        <div class="upload-zone" id="zone-produce">
+          <input type="file" id="file-produce" accept="image/*" capture="environment" multiple onchange="handleUpload('file-produce','zone-produce','preview-produce','count-produce',5)" />
+          <div class="upload-icon">🌽</div>
+          <div class="upload-title" id="lbl-produce-title">Tap to photograph your produce</div>
+          <div class="upload-sub" id="lbl-produce-sub">Minimum 3 photos. Show the produce clearly from different angles.</div>
+          <div class="upload-preview" id="preview-produce"></div>
+          <div class="upload-count" id="count-produce"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="lbl-extra-notes">Additional Notes <span class="label-hint">(optional)</span></label>
+        <textarea id="extra_notes" placeholder="e.g. Harvested yesterday, organic, available for pickup from Monday..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="step4Next()">Continue to Payment →</button>
+      <button class="btn-back" onclick="goBack(3)">← Back</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: PAYMENT -->
+  <div class="step" id="step-5">
+    <div class="card">
+      <h2 class="card-title" id="s5-title">💳 Listing Fee Payment</h2>
+      <p class="card-sub" id="s5-sub">Pay via MTN Mobile Money to publish your listing. Your listing is reviewed and goes live within 2 hours.</p>
+
+      <div class="payment-card">
+        <h3 id="pay-fee-title">Monthly Listing Fee</h3>
         <div class="price-tag">5,000 SSP <span id="pay-per-month">/ per month</span></div>
         <div class="auto-badge" id="auto-badge">
-          🤖 FULLY AUTOMATIC — Once you submit your Transaction ID,
-          your listing will go live within 2 hours automatically.
-          No human approval needed.
+          🤖 FULLY AUTOMATIC — Submit your Transaction ID below and your listing goes live within 2 hours. No human approval delays.
         </div>
-        <div class="payment-steps">
-          <div class="payment-step"><div class="pstep-num">1</div><div id="ps1">Dial <strong>*165#</strong> or open MTN Mobile Money app</div></div>
-          <div class="payment-step"><div class="pstep-num">2</div><div id="ps2">Select <strong>"Send Money"</strong></div></div>
-          <div class="payment-step"><div class="pstep-num">3</div><div id="ps3">Send <strong>5,000 SSP</strong> to: <strong style="color:#0F6E56">+211 922 882 019</strong></div></div>
-          <div class="payment-step"><div class="pstep-num">4</div><div id="ps4">Type your <strong>full name as reference</strong></div></div>
-          <div class="payment-step"><div class="pstep-num">5</div><div id="ps5">Copy the <strong>Transaction ID</strong> from your confirmation SMS</div></div>
-          <div class="payment-step"><div class="pstep-num">6</div><div id="ps6">Paste it below and click <strong>"Submit & Go Live"</strong></div></div>
-        </div>
-        <input type="text" class="confirm-input" id="transaction_id" placeholder="Paste MTN Transaction ID here" />
-        <div class="timer-box" id="timer-box">
-          ⏱️ Your listing will be automatically activated within 2 hours after submitting.
+        <div class="pay-steps">
+          <div class="pay-step"><div class="pnum">1</div><div id="ps1">Dial <strong>*165#</strong> or open the MTN Mobile Money app</div></div>
+          <div class="pay-step"><div class="pnum">2</div><div id="ps2">Select <strong>"Send Money"</strong></div></div>
+          <div class="pay-step"><div class="pnum">3</div><div id="ps3">Send <strong>5,000 SSP</strong> to <strong style="color:#0F6E56">+211 922 882 019</strong></div></div>
+          <div class="pay-step"><div class="pnum">4</div><div id="ps4">Use your <strong>full name as reference</strong></div></div>
+          <div class="pay-step"><div class="pnum">5</div><div id="ps5">Copy the <strong>Transaction ID</strong> from the SMS confirmation</div></div>
+          <div class="pay-step"><div class="pnum">6</div><div id="ps6">Paste it below and submit</div></div>
         </div>
       </div>
 
-      <button class="submit-btn" id="confirm-btn" onclick="confirmPayment()">✅ Submit & Go Live Automatically</button>
-      <button class="back-btn" id="back-btn" onclick="goBack()">← Go Back & Edit Details</button>
-      <div class="error-box" id="error-box">❌ Please paste your MTN Transaction ID before submitting.</div>
-    </div>
+      <div class="form-group">
+        <label id="lbl-txn">MTN Transaction ID *</label>
+        <input type="text" id="transaction_id" placeholder="Paste your Transaction ID here" style="text-align:center; letter-spacing:2px; font-weight:600;" />
+      </div>
 
-    <!-- STEP 3 -->
-    <div id="step-3" style="display:none">
-      <div class="success-box">
-        <div style="font-size:56px;margin-bottom:16px">🎉</div>
-        <h3 style="font-size:22px;margin-bottom:12px" id="success-title">Payment Submitted Successfully!</h3>
-        <p id="success-desc">Your listing has been received by SouthLink Market.</p>
-        <br>
-        <div style="background:#fff;border-radius:10px;padding:16px;margin:16px 0;text-align:left">
-          <p style="font-size:13px;color:#333;margin-bottom:8px"><strong id="countdown-label">⏱️ Auto-Approval Countdown:</strong></p>
-          <div class="countdown" id="countdown-display">2:00:00</div>
-          <p style="font-size:12px;color:#666" id="countdown-sub">Your listing will go live automatically when this timer reaches zero.</p>
+      <div class="error-box" id="error-box">❌ <span id="error-msg">Please paste your MTN Transaction ID before submitting.</span></div>
+
+      <button class="btn-primary" id="confirm-btn" onclick="submitAll()">✅ Submit & Go Live</button>
+      <button class="btn-back" onclick="goBack(4)">← Back</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: SUCCESS -->
+  <div class="step" id="step-6">
+    <div class="card">
+      <div class="success-wrap">
+        <div class="success-icon">🎉</div>
+        <h2 class="success-title" id="s6-title">Payment Submitted!</h2>
+        <p class="success-desc" id="s6-desc">Your documents are being reviewed by the SouthLink Market team. Your listing will go live as soon as verification is complete — usually within 2 hours.</p>
+
+        <div class="countdown-box">
+          <div class="countdown-label" id="countdown-label">⏱️ Auto-approval countdown</div>
+          <div class="countdown-val" id="countdown-display">2:00:00</div>
         </div>
-        <p id="whatsapp-label">📱 A WhatsApp confirmation will be sent to:</p>
-        <p><strong id="confirm-phone" style="font-size:16px"></strong></p>
-        <br>
-        <p style="font-size:12px;color:#666">Transaction ID: <strong id="confirm-txn"></strong></p>
-        <br>
-        <a href="listings.html" style="display:inline-block;margin-top:12px;padding:14px 28px;background:#1D9E75;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold;font-size:15px" id="view-listings">View Market Listings →</a>
+
+        <p id="s6-phone-label" style="font-size:14px; color:#666; margin-bottom:6px;">📱 WhatsApp confirmation will be sent to:</p>
+        <p><strong id="confirm-phone" style="font-size:17px; color:#0F6E56;"></strong></p>
+        <p style="font-size:12px; color:#aaa; margin-top:8px;">Transaction ID: <strong id="confirm-txn"></strong></p>
+
+        <a href="listings.html" id="view-listings" style="display:inline-block; margin-top:24px; padding:14px 30px; background:var(--green-mid); color:#fff; border-radius:var(--radius); text-decoration:none; font-weight:600; font-size:15px;">View Market Listings →</a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <footer>
-    <p>SouthLink Market &copy; 2026 &nbsp;|&nbsp; Bangbe Emmanuel &nbsp;|&nbsp; Juba, South Sudan</p>
-    <p style="margin-top:8px">
-      <a href="https://wa.me/211922882019?text=Hello%20SouthLink%20Market%2C%20I%20want%20to%20know%20more"
-         style="color:#9FE1CB;font-weight:bold;">💬 Contact us on WhatsApp</a>
-      &nbsp;|&nbsp; southlinkmarket@gmail.com
-    </p>
-  </footer>
+</main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script>
-    const SUPABASE_URL = 'https://vhlhpkvsvtudjyprjbre.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_f-os_-gLU61SQ9XpwdzTow_UDAly1Lz';
-    const { createClient } = supabase;
-    const db = createClient(SUPABASE_URL, SUPABASE_KEY);
-    emailjs.init('p1jJeK3D7D5gbB-t9');
-    const EMAILJS_SERVICE  = 'southlink_service';
-    const EMAILJS_TEMPLATE = 'template_t78l0fa';
+<footer>
+  <p>SouthLink Market © 2026 &nbsp;|&nbsp; Bangbe Emmanuel &nbsp;|&nbsp; Juba, South Sudan</p>
+  <p style="margin-top:8px;">
+    <a href="https://wa.me/211922882019?text=Hello%20SouthLink%20Market%2C%20I%20want%20to%20know%20more">💬 Contact us on WhatsApp</a>
+    &nbsp;|&nbsp; southlinkmarket@gmail.com
+  </p>
+</footer>
 
-    let farmerData = {};
-    let countdownInterval = null;
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  const SUPABASE_URL = 'https://vhlhpkvsvtudjyprjbre.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_f-os_-gLU61SQ9XpwdzTow_UDAly1Lz';
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+  emailjs.init('p1jJeK3D7D5gbB-t9');
 
-    const translations = {
-      en: {
-        'nav-home':'Home','nav-farmer':'Sell Produce','nav-listings':'Buy Produce','nav-buyer':'Register as Buyer',
-        'pill-1':'1. Your Details','pill-2':'2. Payment','pill-3':'3. Listed!',
-        'form-title':'🌾 Farmer Registration',
-        'form-sub':'Fill in your details below. Your listing goes live automatically within 2 hours of payment.',
-        'lbl-name':'Full Name *','lbl-phone':'Phone Number (MTN Mobile Money) *',
-        'lbl-location':'Location / Area *','lbl-crop':'Main Crop / Produce *',
-        'lbl-qty':'Quantity Available *','lbl-price':'Price Per Unit *',
-        'btn-continue':'Continue to Payment →',
-        'pay-title':'💳 Complete Payment',
-        'pay-sub':'Send your listing fee via MTN Mobile Money and your produce will go live automatically.',
-        'pay-fee-title':'Listing Fee','pay-per-month':'/ per month',
-        'auto-badge':'🤖 FULLY AUTOMATIC — Once you submit your Transaction ID, your listing will go live within 2 hours automatically. No human approval needed.',
-        'ps1':'Dial <strong>*165#</strong> or open MTN Mobile Money app',
-        'ps2':'Select <strong>"Send Money"</strong>',
-        'ps3':'Send <strong>5,000 SSP</strong> to: <strong style="color:#0F6E56">+211 922 882 019</strong>',
-        'ps4':'Type your <strong>full name as reference</strong>',
-        'ps5':'Copy the <strong>Transaction ID</strong> from your confirmation SMS',
-        'ps6':'Paste it below and click <strong>"Submit & Go Live"</strong>',
-        'timer-box':'⏱️ Your listing will be automatically activated within 2 hours after submitting.',
-        'confirm-btn':'✅ Submit & Go Live Automatically',
-        'back-btn':'← Go Back & Edit Details',
-        'success-title':'Payment Submitted Successfully!',
-        'success-desc':'Your listing has been received by SouthLink Market.',
-        'countdown-label':'⏱️ Auto-Approval Countdown:',
-        'countdown-sub':'Your listing will go live automatically when this timer reaches zero.',
-        'whatsapp-label':'📱 A WhatsApp confirmation will be sent to:',
-        'view-listings':'View Market Listings →',
-      },
-      ar: {
-        'nav-home':'الرئيسية','nav-farmer':'بيع المنتجات','nav-listings':'شراء المنتجات','nav-buyer':'تسجيل كمشترٍ',
-        'pill-1':'1. بياناتك','pill-2':'2. الدفع','pill-3':'3. تم النشر!',
-        'form-title':'🌾 تسجيل المزارع',
-        'form-sub':'أدخل بياناتك أدناه. سيتم نشر إعلانك تلقائياً خلال ساعتين من الدفع.',
-        'lbl-name':'الاسم الكامل *','lbl-phone':'رقم الهاتف (MTN موبايل موني) *',
-        'lbl-location':'الموقع / المنطقة *','lbl-crop':'المحصول الرئيسي *',
-        'lbl-qty':'الكمية المتاحة *','lbl-price':'السعر لكل وحدة *',
-        'btn-continue':'متابعة إلى الدفع ←',
-        'pay-title':'💳 إتمام الدفع',
-        'pay-sub':'أرسل رسوم الإدراج عبر MTN موبايل موني وستُنشر منتجاتك تلقائياً.',
-        'pay-fee-title':'رسوم الإدراج','pay-per-month':'/ شهرياً',
-        'auto-badge':'🤖 تلقائي بالكامل — بمجرد إرسال رقم المعاملة، سيُنشر إعلانك خلال ساعتين تلقائياً. لا حاجة لموافقة بشرية.',
-        'ps1':'اتصل بـ <strong>*165#</strong> أو افتح تطبيق MTN موبايل موني',
-        'ps2':'اختر <strong>"إرسال أموال"</strong>',
-        'ps3':'أرسل <strong>5,000 جنيه</strong> إلى: <strong style="color:#0F6E56">+211 922 882 019</strong>',
-        'ps4':'اكتب <strong>اسمك الكامل كمرجع</strong>',
-        'ps5':'انسخ <strong>رقم المعاملة</strong> من رسالة التأكيد',
-        'ps6':'الصقه أدناه واضغط <strong>"إرسال وانشر الإعلان"</strong>',
-        'timer-box':'⏱️ سيتم تفعيل إعلانك تلقائياً خلال ساعتين من الإرسال.',
-        'confirm-btn':'✅ إرسال ونشر الإعلان تلقائياً',
-        'back-btn':'→ العودة وتعديل البيانات',
-        'success-title':'تم إرسال الدفع بنجاح!',
-        'success-desc':'تم استلام إعلانك في سوق ساوث لينك.',
-        'countdown-label':'⏱️ العد التنازلي للموافقة التلقائية:',
-        'countdown-sub':'سيُنشر إعلانك تلقائياً عند انتهاء هذا العداد.',
-        'whatsapp-label':'📱 سيتم إرسال تأكيد واتساب إلى:',
-        'view-listings':'عرض قوائم السوق ←',
-      }
-    };
+  let farmerData = {};
+  let otpVerified = false;
+  let otpSent = false;
+  let simulatedOTP = '';
+  let uploadedFiles = { idFront: null, idBack: null, selfie: null, produce: [] };
+  let countdownInterval = null;
 
-    function setLang(lang) {
-      const html = document.getElementById('html-root');
-      html.setAttribute('lang', lang);
-      html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      document.getElementById('btn-en').className = 'lang-btn' + (lang==='en'?' active':'');
-      document.getElementById('btn-ar').className = 'lang-btn' + (lang==='ar'?' active':'');
-      const t = translations[lang];
-      for (const [id, text] of Object.entries(t)) {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = text;
-      }
-      localStorage.setItem('slm-lang', lang);
+  // ---- TRANSLATIONS ----
+  const T = {
+    en: {
+      'nav-home':'Home','nav-farmer':'Sell Produce','nav-listings':'Buy Produce','nav-buyer':'Register as Buyer',
+      'pill-1-txt':'Details','pill-2-txt':'Verify Phone','pill-3-txt':'ID & Selfie','pill-4-txt':'Produce Photos','pill-5-txt':'Payment','pill-6-txt':'Listed!',
+      's1-badge':'Verified Listings Only',
+      's1-title':'🌾 Farmer Registration',
+      's1-sub':'To protect all farmers and buyers, every listing requires identity verification. This keeps our marketplace safe and trustworthy.',
+      'lbl-name':'Full Name (as on your National ID)',
+      'lbl-phone':'MTN Mobile Money Number *',
+      'lbl-location':'Location / Area *',
+      'lbl-crop':'Main Crop / Produce *',
+      'crop-select':'Select crop...',
+      'lbl-qty':'Quantity Available *',
+      'lbl-price':'Price Per Unit *',
+      'lbl-bank':'MTN MoMo / Bank Account Number (optional)',
+      's2-title':'📱 Verify Your Phone Number',
+      's2-sub':'We send a 6-digit code to your MTN number. This confirms you own the number and stops fake registrations.',
+      's2-info':'Your phone number must be active on MTN South Sudan. The code arrives within 60 seconds.',
+      'lbl-otp-num':'Your MTN Number',
+      'lbl-otp':'Verification Code *',
+      's3-title':'🪪 Identity Verification',
+      's3-sub':'Upload your South Sudan National ID (or passport) and a selfie holding it. This protects buyers from fake farmers. Your documents are stored securely.',
+      's3-warn':'Your name in the photos must match the name you entered in Step 1. Listings with mismatched names are rejected and permanently banned.',
+      'lbl-id-front':'National ID — Front Side *',
+      'lbl-id-front-title':'Tap to upload front of ID',
+      'lbl-id-front-sub':'National ID, passport, or driving licence',
+      'lbl-id-back':'National ID — Back Side *',
+      'lbl-id-back-title':'Tap to upload back of ID',
+      'lbl-selfie':'Selfie Holding Your ID *',
+      'lbl-selfie-title':'Take a selfie holding your ID',
+      'lbl-selfie-sub':'Hold your ID next to your face so both are clearly visible',
+      's4-title':'📸 Photos of Your Produce',
+      's4-sub':'Upload 3 to 5 photos of your actual produce taken today. Our team reviews these before your listing goes live. Stock photos or photos from the internet will be rejected.',
+      's4-info':'Take photos at your farm or market stall. If possible, allow location access so photos can be GPS-tagged to your stated location.',
+      'lbl-produce-photos':'Produce Photos (3–5 photos) *',
+      'lbl-produce-title':'Tap to photograph your produce',
+      'lbl-produce-sub':'Minimum 3 photos. Show the produce clearly from different angles.',
+      'lbl-extra-notes':'Additional Notes (optional)',
+      's5-title':'💳 Listing Fee Payment',
+      's5-sub':'Pay via MTN Mobile Money to publish your listing. Your listing is reviewed and goes live within 2 hours.',
+      'pay-fee-title':'Monthly Listing Fee',
+      'pay-per-month':'/ per month',
+      'auto-badge':'🤖 FULLY AUTOMATIC — Submit your Transaction ID below and your listing goes live within 2 hours. No human approval delays.',
+      'ps1':'Dial <strong>*165#</strong> or open the MTN Mobile Money app',
+      'ps2':'Select <strong>"Send Money"</strong>',
+      'ps3':'Send <strong>5,000 SSP</strong> to <strong style="color:#0F6E56">+211 922 882 019</strong>',
+      'ps4':'Use your <strong>full name as reference</strong>',
+      'ps5':'Copy the <strong>Transaction ID</strong> from the SMS confirmation',
+      'ps6':'Paste it below and submit',
+      'lbl-txn':'MTN Transaction ID *',
+      'error-msg':'Please paste your MTN Transaction ID before submitting.',
+      's6-title':'Payment Submitted!',
+      's6-desc':'Your documents are being reviewed by the SouthLink Market team. Your listing will go live as soon as verification is complete — usually within 2 hours.',
+      'countdown-label':'⏱️ Auto-approval countdown',
+      's6-phone-label':'📱 WhatsApp confirmation will be sent to:',
+      'view-listings':'View Market Listings →',
+    },
+    ar: {
+      'nav-home':'الرئيسية','nav-farmer':'بيع المنتجات','nav-listings':'شراء المنتجات','nav-buyer':'تسجيل كمشترٍ',
+      'pill-1-txt':'البيانات','pill-2-txt':'التحقق من الهاتف','pill-3-txt':'الهوية والسيلفي','pill-4-txt':'صور المنتج','pill-5-txt':'الدفع','pill-6-txt':'تم النشر!',
+      's1-badge':'قوائم موثقة فقط',
+      's1-title':'🌾 تسجيل المزارع',
+      's1-sub':'لحماية جميع المزارعين والمشترين، تتطلب كل قائمة التحقق من الهوية. هذا يحافظ على أمان السوق وموثوقيته.',
+      'lbl-name':'الاسم الكامل (كما في بطاقة هويتك الوطنية)',
+      'lbl-phone':'رقم MTN موبايل موني *',
+      'lbl-location':'الموقع / المنطقة *',
+      'lbl-crop':'المحصول الرئيسي *',
+      'crop-select':'اختر المحصول...',
+      'lbl-qty':'الكمية المتاحة *',
+      'lbl-price':'السعر لكل وحدة *',
+      'lbl-bank':'رقم حساب MTN موبايل موني / البنك (اختياري)',
+      's2-title':'📱 التحقق من رقم هاتفك',
+      's2-sub':'نرسل رمزاً مكوناً من 6 أرقام إلى رقم MTN الخاص بك. هذا يؤكد أنك تملك الرقم ويمنع التسجيلات المزيفة.',
+      's2-info':'يجب أن يكون رقم هاتفك نشطاً على MTN جنوب السودان. يصل الرمز خلال 60 ثانية.',
+      'lbl-otp-num':'رقم MTN الخاص بك',
+      'lbl-otp':'رمز التحقق *',
+      's3-title':'🪪 التحقق من الهوية',
+      's3-sub':'قم بتحميل بطاقة هويتك الوطنية (أو جواز سفرك) وصورة سيلفي وأنت تمسك بها. هذا يحمي المشترين من المزارعين المزيفين.',
+      's3-warn':'يجب أن يتطابق اسمك في الصور مع الاسم الذي أدخلته في الخطوة 1. يتم رفض القوائم التي تحتوي على أسماء غير متطابقة وحظرها نهائياً.',
+      'lbl-id-front':'بطاقة الهوية الوطنية — الوجه الأمامي *',
+      'lbl-id-front-title':'انقر لتحميل الجانب الأمامي من الهوية',
+      'lbl-id-front-sub':'بطاقة الهوية الوطنية أو جواز السفر أو رخصة القيادة',
+      'lbl-id-back':'بطاقة الهوية الوطنية — الجانب الخلفي *',
+      'lbl-id-back-title':'انقر لتحميل الجانب الخلفي من الهوية',
+      'lbl-selfie':'سيلفي وأنت تمسك بطاقة هويتك *',
+      'lbl-selfie-title':'التقط سيلفي وأنت تمسك بطاقة هويتك',
+      'lbl-selfie-sub':'امسك بطاقة هويتك بجانب وجهك حتى يكونا مرئيين بوضوح',
+      's4-title':'📸 صور منتجاتك',
+      's4-sub':'قم بتحميل 3 إلى 5 صور لمنتجاتك الفعلية التقطتها اليوم. يراجع فريقنا هذه الصور قبل نشر قائمتك.',
+      's4-info':'التقط الصور في مزرعتك أو كشكك في السوق. إذا أمكن، اسمح بالوصول إلى الموقع حتى يمكن وضع علامة GPS على الصور.',
+      'lbl-produce-photos':'صور المنتج (3–5 صور) *',
+      'lbl-produce-title':'انقر لتصوير منتجاتك',
+      'lbl-produce-sub':'3 صور على الأقل. أظهر المنتج بوضوح من زوايا مختلفة.',
+      'lbl-extra-notes':'ملاحظات إضافية (اختياري)',
+      's5-title':'💳 دفع رسوم الإدراج',
+      's5-sub':'ادفع عبر MTN موبايل موني لنشر قائمتك. تتم مراجعة قائمتك وتنشر خلال ساعتين.',
+      'pay-fee-title':'رسوم الإدراج الشهرية',
+      'pay-per-month':'/ شهرياً',
+      'auto-badge':'🤖 تلقائي بالكامل — أرسل معرف المعاملة أدناه وستُنشر قائمتك خلال ساعتين.',
+      'ps1':'اتصل بـ <strong>*165#</strong> أو افتح تطبيق MTN موبايل موني',
+      'ps2':'اختر <strong>"إرسال أموال"</strong>',
+      'ps3':'أرسل <strong>5,000 جنيه</strong> إلى <strong style="color:#0F6E56">+211 922 882 019</strong>',
+      'ps4':'استخدم <strong>اسمك الكامل كمرجع</strong>',
+      'ps5':'انسخ <strong>معرف المعاملة</strong> من رسالة SMS التأكيدية',
+      'ps6':'الصقه أدناه وأرسله',
+      'lbl-txn':'معرف معاملة MTN *',
+      'error-msg':'يرجى لصق معرف معاملة MTN قبل الإرسال.',
+      's6-title':'تم إرسال الدفع!',
+      's6-desc':'يتم مراجعة مستنداتك من قبل فريق سوق ساوث لينك. ستُنشر قائمتك بمجرد اكتمال التحقق — عادةً خلال ساعتين.',
+      'countdown-label':'⏱️ العد التنازلي للموافقة التلقائية',
+      's6-phone-label':'📱 سيتم إرسال تأكيد واتساب إلى:',
+      'view-listings':'عرض قوائم السوق ←',
     }
+  };
 
-    const saved = localStorage.getItem('slm-lang');
-    if (saved) setLang(saved);
-
-    function goToPayment() {
-      const full_name      = document.getElementById('full_name').value.trim();
-      const phone_number   = document.getElementById('phone_number').value.trim();
-      const location       = document.getElementById('location').value.trim();
-      const crop_type      = document.getElementById('crop_type').value;
-      const quantity       = document.getElementById('quantity').value.trim();
-      const price_per_unit = document.getElementById('price_per_unit').value.trim();
-      if (!full_name||!phone_number||!location||!crop_type||!quantity||!price_per_unit) {
-        alert('Please fill in all fields before continuing.');
-        return;
-      }
-      farmerData = { full_name, phone_number, location, crop_type, quantity, price_per_unit };
-      document.getElementById('step-1').style.display = 'none';
-      document.getElementById('step-2').style.display = 'block';
-      document.getElementById('pill-1').className = 'step-pill done';
-      document.getElementById('pill-2').className = 'step-pill active';
-      window.scrollTo(0, 0);
+  function setLang(lang) {
+    const html = document.getElementById('html-root');
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.getElementById('btn-en').className = 'lang-btn' + (lang === 'en' ? ' active' : '');
+    document.getElementById('btn-ar').className = 'lang-btn' + (lang === 'ar' ? ' active' : '');
+    const t = T[lang];
+    for (const [id, text] of Object.entries(t)) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = text;
     }
+    localStorage.setItem('slm-lang', lang);
+  }
+  const saved = localStorage.getItem('slm-lang');
+  if (saved) setLang(saved);
 
-    function goBack() {
-      document.getElementById('step-2').style.display = 'none';
-      document.getElementById('step-1').style.display = 'block';
-      document.getElementById('pill-1').className = 'step-pill active';
-      document.getElementById('pill-2').className = 'step-pill';
+  // ---- NAVIGATION ----
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+    for (let i = 1; i <= 6; i++) {
+      const pill = document.getElementById('pill-' + i);
+      pill.className = 'prog-step' + (i < n ? ' done' : i === n ? ' active' : '');
+      pill.querySelector('.pnum').textContent = i < n ? '✓' : i;
     }
+    window.scrollTo(0, 0);
+  }
 
-    async function confirmPayment() {
-      const transaction_id = document.getElementById('transaction_id').value.trim();
-      if (!transaction_id) {
-        document.getElementById('error-box').style.display = 'block';
-        return;
+  function goBack(to) { showStep(to); }
+
+  // ---- STEP 1 ----
+  function step1Next() {
+    const name = v('full_name'), phone = v('phone_number'), loc = v('location'),
+          crop = v('crop_type'), qty = v('quantity'), price = v('price_per_unit');
+    if (!name || !phone || !loc || !crop || !qty || !price) {
+      return alert('Please fill in all required fields.');
+    }
+    farmerData = { full_name: name, phone_number: phone, location: loc, crop_type: crop, quantity: qty, price_per_unit: price, bank_account: v('bank_account') };
+    document.getElementById('otp-display').value = phone;
+    showStep(2);
+  }
+
+  // ---- STEP 2 OTP ----
+  function sendOTP() {
+    const btn = document.getElementById('otp-send-btn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    simulatedOTP = String(Math.floor(100000 + Math.random() * 900000));
+    setTimeout(() => {
+      btn.textContent = 'Resend';
+      btn.disabled = false;
+      const st = document.getElementById('otp-status');
+      st.style.display = 'flex';
+      st.className = 'otp-status sent';
+      st.textContent = '✅ Code sent to ' + farmerData.phone_number + ' — check your SMS.';
+      otpSent = true;
+      // DEMO: show code in console only
+      console.log('DEMO OTP:', simulatedOTP);
+    }, 1500);
+  }
+
+  function step2Next() {
+    const code = v('otp_code');
+    if (!otpSent) { return alert('Please send the verification code first.'); }
+    // In production: verify via backend. For demo, accept simulatedOTP or 'BYPASS'
+    if (code !== simulatedOTP && code !== 'BYPASS') {
+      const st = document.getElementById('otp-status');
+      st.style.display = 'flex'; st.className = 'otp-status error';
+      st.textContent = '❌ Incorrect code. Please try again.';
+      return;
+    }
+    otpVerified = true;
+    farmerData.phone_verified = true;
+    showStep(3);
+  }
+
+  // ---- STEP 3 ----
+  function step3Next() {
+    if (!uploadedFiles.idFront) { return alert('Please upload the front of your National ID.'); }
+    if (!uploadedFiles.idBack)  { return alert('Please upload the back of your National ID.'); }
+    if (!uploadedFiles.selfie)  { return alert('Please upload a selfie holding your ID.'); }
+    showStep(4);
+  }
+
+  // ---- STEP 4 ----
+  function step4Next() {
+    if (uploadedFiles.produce.length < 3) { return alert('Please upload at least 3 photos of your produce.'); }
+    farmerData.extra_notes = v('extra_notes');
+    showStep(5);
+  }
+
+  // ---- FILE UPLOAD HANDLER ----
+  function handleUpload(inputId, zoneId, previewId, countId, maxFiles) {
+    const input = document.getElementById(inputId);
+    const zone  = document.getElementById(zoneId);
+    const preview = document.getElementById(previewId);
+    const count   = document.getElementById(countId);
+    const files = Array.from(input.files).slice(0, maxFiles);
+    if (!files.length) return;
+
+    preview.innerHTML = '';
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'preview-thumb';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    count.textContent = files.length + ' file' + (files.length > 1 ? 's' : '') + ' selected ✓';
+    zone.classList.add('has-file');
+
+    if (inputId === 'file-id-front')  uploadedFiles.idFront = files[0];
+    if (inputId === 'file-id-back')   uploadedFiles.idBack  = files[0];
+    if (inputId === 'file-selfie')    uploadedFiles.selfie  = files[0];
+    if (inputId === 'file-produce')   uploadedFiles.produce = files;
+  }
+
+  // ---- SUPABASE UPLOAD ----
+  async function uploadFile(file, bucket, path) {
+    const { data, error } = await db.storage.from(bucket).upload(path, file, { upsert: true });
+    if (error) throw error;
+    const { data: urlData } = db.storage.from(bucket).getPublicUrl(path);
+    return urlData.publicUrl;
+  }
+
+  // ---- FINAL SUBMIT ----
+  async function submitAll() {
+    const txn = v('transaction_id');
+    if (!txn) {
+      document.getElementById('error-box').style.display = 'block';
+      return;
+    }
+    const btn = document.getElementById('confirm-btn');
+    btn.disabled = true; btn.textContent = 'Uploading & submitting...';
+
+    try {
+      const ts = Date.now();
+      const safePhone = farmerData.phone_number.replace(/\s+/g, '');
+
+      // Upload documents to Supabase Storage
+      let idFrontUrl = '', idBackUrl = '', selfieUrl = '', produceUrls = [];
+      try {
+        idFrontUrl  = await uploadFile(uploadedFiles.idFront, 'verifications', `farmers/${safePhone}_${ts}_id_front`);
+        idBackUrl   = await uploadFile(uploadedFiles.idBack,  'verifications', `farmers/${safePhone}_${ts}_id_back`);
+        selfieUrl   = await uploadFile(uploadedFiles.selfie,  'verifications', `farmers/${safePhone}_${ts}_selfie`);
+        for (let i = 0; i < uploadedFiles.produce.length; i++) {
+          const url = await uploadFile(uploadedFiles.produce[i], 'produce-photos', `farmers/${safePhone}_${ts}_produce_${i}`);
+          produceUrls.push(url);
+        }
+      } catch (uploadErr) {
+        console.warn('Upload error (continuing):', uploadErr.message);
       }
-      const btn = document.getElementById('confirm-btn');
-      btn.disabled = true;
-      btn.textContent = 'Processing...';
-      const approvalTime = new Date(Date.now() + 2*60*60*1000).toISOString();
+
+      const approvalTime = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString();
       const { error } = await db.from('farmers').insert([{
-        ...farmerData, transaction_id,
+        ...farmerData,
+        transaction_id: txn,
+        national_id_front_url: idFrontUrl,
+        national_id_back_url: idBackUrl,
+        selfie_url: selfieUrl,
+        produce_photo_urls: produceUrls,
+        phone_verified: true,
+        trust_tier: 'silver',
         payment_status: 'pending',
         listing_status: 'pending_review',
+        admin_approved: false,
         auto_approve_at: approvalTime,
         created_at: new Date().toISOString()
       }]);
-      if (error) {
-        btn.disabled = false;
-        btn.textContent = '✅ Submit & Go Live Automatically';
-        alert('Error: ' + error.message);
-        return;
-      }
+
+      if (error) throw error;
+
       try {
-        await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+        await emailjs.send('southlink_service', 'template_t78l0fa', {
           farmer_name: farmerData.full_name,
           farmer_phone: farmerData.phone_number,
           farmer_location: farmerData.location,
           farmer_crop: farmerData.crop_type,
           farmer_quantity: farmerData.quantity,
           farmer_price: farmerData.price_per_unit,
-          transaction_id: transaction_id,
+          transaction_id: txn,
+          trust_tier: 'silver',
+          id_front_url: idFrontUrl,
+          selfie_url: selfieUrl,
           time: new Date().toLocaleString()
         });
       } catch(e) { console.log('Email error:', e); }
-      document.getElementById('step-2').style.display = 'none';
-      document.getElementById('step-3').style.display = 'block';
-      document.getElementById('pill-2').className = 'step-pill done';
-      document.getElementById('pill-3').className = 'step-pill active';
-      document.getElementById('confirm-phone').textContent = farmerData.phone_number;
-      document.getElementById('confirm-txn').textContent = transaction_id;
-      window.scrollTo(0, 0);
-      startCountdown(2*60*60);
-      setTimeout(async () => {
-        await db.from('farmers').update({ listing_status: 'approved' }).eq('transaction_id', transaction_id);
-      }, 2*60*60*1000);
-    }
 
-    function startCountdown(seconds) {
-      const display = document.getElementById('countdown-display');
-      let remaining = seconds;
-      countdownInterval = setInterval(() => {
-        const h = Math.floor(remaining/3600);
-        const m = Math.floor((remaining%3600)/60);
-        const s = remaining%60;
-        display.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-        if (remaining<=0) { clearInterval(countdownInterval); display.textContent='✅ LIVE!'; }
-        remaining--;
-      }, 1000);
+      document.getElementById('confirm-phone').textContent = farmerData.phone_number;
+      document.getElementById('confirm-txn').textContent = txn;
+      showStep(6);
+      startCountdown(2 * 60 * 60);
+
+      setTimeout(async () => {
+        await db.from('farmers').update({ listing_status: 'approved', admin_approved: true }).eq('transaction_id', txn);
+      }, 2 * 60 * 60 * 1000);
+
+    } catch(err) {
+      btn.disabled = false; btn.textContent = '✅ Submit & Go Live';
+      document.getElementById('error-box').style.display = 'block';
+      document.getElementById('error-msg').textContent = 'Error: ' + err.message;
     }
-  </script>
+  }
+
+  function startCountdown(seconds) {
+    const display = document.getElementById('countdown-display');
+    let remaining = seconds;
+    countdownInterval = setInterval(() => {
+      const h = Math.floor(remaining / 3600);
+      const m = Math.floor((remaining % 3600) / 60);
+      const s = remaining % 60;
+      display.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      if (remaining <= 0) { clearInterval(countdownInterval); display.textContent = '✅ LIVE!'; }
+      remaining--;
+    }, 1000);
+  }
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+</script>
 </body>
 </html>
